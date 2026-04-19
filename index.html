@@ -1,338 +1,1031 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Filipino Art Gallery | Heritage & Modernity</title>
+    <title>ICT in the Modern Era</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23CE1126'/%3E%3Crect x='0' y='33' width='100' height='34' fill='%230038A8'/%3E%3Cpolygon points='50,20 60,50 50,80 40,50' fill='%23FCD116'/%3E%3Ccircle cx='50' cy='50' r='15' fill='%23FCD116'/%3E%3C/svg%3E">
   </head>
   <body>
-    <div class="loading">
-    <div class="loading-spinner"></div>
-    </div>
-    <!-- Header Section -->
-    <header class="header">
-      <nav class="navbar">
-        <div class="nav-container">
-          <div class="logo">
-            <h1>ART EXHIBIT</h1>
-          </div>
-          <ul class="nav-menu">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#art-categories">Art Categories</a></li>
-            <li><a href="#featured-artworks">Featured Artworks</a></li>
-            <li><a href="#featured-artists">Featured Artists</a></li>
-            <li><a href="#current-exhibitions">Current Exhibitions</a></li>
-          </ul>
-          <div class="hamburger">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-          </div>
-        </div>
+    <!-- ─── CURSOR ─────────────────────────────────────────────── -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-follower" id="cursor-follower"></div>
+
+    <!-- ─── SIDEBAR NAV ─────────────────────────────────────────── -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <span class="logo-mark">ICT</span>
+        <span class="logo-year">2026</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <ul>
+          <li>
+            <a href="#intro" class="nav-link active" data-label="00"
+              >Introduction</a
+            >
+          </li>
+          <li>
+            <a href="#comm" class="nav-link" data-label="01">Communication</a>
+          </li>
+          <li>
+            <a href="#networking" class="nav-link" data-label="02"
+              >Networking</a
+            >
+          </li>
+          <li>
+            <a href="#cloud" class="nav-link" data-label="03"
+              >Cloud Computing</a
+            >
+          </li>
+          <li>
+            <a href="#ai" class="nav-link" data-label="04"
+              >Artificial Intelligence</a
+            >
+          </li>
+          <li>
+            <a href="#iot" class="nav-link" data-label="05"
+              >Internet of Things</a
+            >
+          </li>
+          <li>
+            <a href="#multimedia" class="nav-link" data-label="06"
+              >Multimedia</a
+            >
+          </li>
+          <li>
+            <a href="#cyber" class="nav-link" data-label="07">Cybersecurity</a>
+          </li>
+          <li>
+            <a href="#bigdata" class="nav-link" data-label="08">Big Data</a>
+          </li>
+        </ul>
       </nav>
-    </header>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-      <div class="hero-overlay"></div>
-      <div class="hero-content">
-        <h1 class="hero-title">Baliktanaw</h1>
-        <p class="hero-subtitle">
-          Pagtawag upang bumuo ng kurso patungo sa Nakatagong Pamana ng
-          Filipino.<br />Accompany the Filipino's True Identity with Decolonized
-          Arts!
-        </p>
-        <div class="hero-buttons">
-          <button class="btn-primary">Explore Collection</button>
-          <button class="btn-secondary">Join Us On Roblox</button>
-        </div>
+      <div class="sidebar-footer">
+        <span>Modern ICT Technologies</span>
       </div>
-    </section>
+    </aside>
 
-    <!-- Art Categories Section -->
-    <section id="art-categories" class="section art-categories">
-      <div class="container">
-        <h2 class="section-title">Art Categories</h2>
-        <div class="categories-grid">
-          <div class="category-card">
-            <div class="category-icon">🎨</div>
-            <h3>Visual Arts</h3>
-            <p>
-              Traditional and contemporary Filipino painting, sculpture, and
-              photography that capture the soul of the Philippines.
-            </p>
+    <!-- ─── HAMBURGER ────────────────────────────────────────────── -->
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <!-- ─── MAIN CONTENT ─────────────────────────────────────────── -->
+    <main class="main-content" id="main">
+      <!-- ══ HERO / INTRO ══════════════════════════════════════════ -->
+      <section class="section hero-section" id="intro">
+        <div class="hero-inner">
+          <!-- Skeleton grid backdrop -->
+          <div class="hero-grid-backdrop" aria-hidden="true">
+            <div class="grid-line" style="--i: 0"></div>
+            <div class="grid-line" style="--i: 1"></div>
+            <div class="grid-line" style="--i: 2"></div>
+            <div class="grid-line" style="--i: 3"></div>
+            <div class="grid-line" style="--i: 4"></div>
+            <div class="grid-line" style="--i: 5"></div>
           </div>
-          <div class="category-card">
-            <div class="category-icon">📚</div>
-            <h3>Literary Arts</h3>
-            <p>
-              Poetry, novels, and essays that explore the Filipino experience in
-              both English and native languages.
-            </p>
+
+          <div class="hero-tag reveal">EDUCATIONAL REFERENCE · 2026</div>
+
+          <h1 class="hero-title reveal reveal-delay-1">
+            <span class="title-line">Different</span>
+            <span class="title-line italic">Technologies</span>
+            <span class="title-line">in ICT</span>
+          </h1>
+
+          <div class="hero-divider reveal reveal-delay-2"></div>
+
+          <p class="hero-desc reveal reveal-delay-3">
+            Information and Communication Technology has evolved from a
+            supporting discipline into the foundational infrastructure of modern
+            civilization. From sub-millisecond financial transactions to
+            satellite-assisted precision agriculture, ICT underpins every domain
+            of human activity.
+          </p>
+
+          <div class="hero-meta reveal reveal-delay-4">
+            <div class="meta-pill">Science</div>
+            <div class="meta-pill">Technology</div>
+            <div class="meta-pill">Society</div>
           </div>
-          <div class="category-card">
-            <div class="category-icon">🏺</div>
-            <h3>Applied Arts</h3>
-            <p>
-              Traditional crafts, textile arts, and functional designs that
-              showcase Filipino ingenuity and aesthetics.
-            </p>
-          </div>
-          <div class="category-card">
-            <div class="category-icon">🎭</div>
-            <h3>Performance Arts</h3>
-            <p>
-              Dance, music, and theater performances that celebrate Filipino
-              cultural heritage and contemporary expressions.
-            </p>
-          </div>
+
+          <p class="hero-scroll-hint reveal reveal-delay-5">
+            Scroll to explore ↓
+          </p>
         </div>
-      </div>
-    </section>
 
-    <!-- Featured Artworks Section -->
-    <section id="featured-artworks" class="section featured-artworks">
-      <div class="container">
-        <h2 class="section-title">Featured Artworks</h2>
-        <div class="artworks-grid">
-          <div class="artwork-card">
-            <div class="artwork-image">
-              <img
-                src="https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                alt="Spoliarium by Juan Luna"
-              />
-            </div>
-            <div class="artwork-info">
-              <h3>Spoliarium</h3>
-              <p class="artist">Juan Luna</p>
-              <p class="description">
-                A masterpiece depicting fallen gladiators being dragged from the
-                Roman arena.
-              </p>
-            </div>
+        <!-- Bento stat cards -->
+        <div class="bento-stats reveal reveal-delay-4">
+          <div class="bento-card bento-large">
+            <span class="bento-num">175 ZB</span>
+            <span class="bento-label">Global datasphere by 2025 (IDC)</span>
           </div>
-          <div class="artwork-card">
-            <div class="artwork-image">
-              <img
-                src="https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                alt="Spoliarium by Juan Luna"
-              />
-            </div>
-            <div class="artwork-info">
-              <h3>Spoliarium</h3>
-              <p class="artist">Juan Luna</p>
-              <p class="description">
-                A masterpiece depicting fallen gladiators being dragged from the
-                Roman arena.
-              </p>
-            </div>
+          <div class="bento-card">
+            <span class="bento-num">5.4B</span>
+            <span class="bento-label">Internet users worldwide</span>
           </div>
-          <div class="artwork-card">
-            <div class="artwork-image">
-              <img
-                src="https://images.unsplash.com/photo-1579546929662-711aa81148cf?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                alt="Filipina Weaving"
-              />
-            </div>
-            <div class="artwork-info">
-              <h3>Habi ng Lahi</h3>
-              <p class="artist">Traditional Weavers</p>
-              <p class="description">
-                Intricate textile patterns representing various indigenous
-                communities.
-              </p>
-            </div>
+          <div class="bento-card">
+            <span class="bento-num">29B</span>
+            <span class="bento-label">Connected IoT devices by 2030</span>
           </div>
-          <div class="artwork-card">
-            <div class="artwork-image">
-              <img
-                src="https://images.unsplash.com/photo-1547891654-e66ed7ebb968?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                alt="Contemporary Filipino Art"
-              />
-            </div>
-            <div class="artwork-info">
-              <h3>Urban Bayanihan</h3>
-              <p class="artist">Ramon Diaz</p>
-              <p class="description">
-                A modern interpretation of community spirit in metropolitan
-                settings.
-              </p>
-            </div>
+          <div class="bento-card bento-accent">
+            <span class="bento-num">$4.5T</span>
+            <span class="bento-label">Global ICT spending (2024)</span>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Featured Artists Section -->
-    <section id="featured-artists" class="section featured-artists">
-      <div class="container">
-        <h2 class="section-title">Featured Artists</h2>
-        <div class="artists-grid">
-          <div class="artist-card">
-            <div class="artist-image">
-              <img
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                alt="Juan Luna"
-              />
-            </div>
-            <div class="artist-info">
-              <h3>Juan Luna</h3>
-              <p class="specialty">Painter</p>
-              <p class="bio">
-                One of the first recognized Philippine artists, known for his
-                dramatic and expansive works.
+      <!-- ══ 01 · COMMUNICATION TECHNOLOGIES ═══════════════════════ -->
+      <section class="section tech-section" id="comm">
+        <div class="section-header reveal">
+          <span class="section-index">01</span>
+          <h2 class="section-title">Communication Technologies</h2>
+          <p class="section-sub">The arteries of the digital world</p>
+        </div>
+
+        <div class="section-body">
+          <p class="lead reveal">
+            Modern communication technologies have transcended geographical
+            constraints, enabling real-time exchange of voice, data, and media
+            across planetary distances with imperceptible latency.
+          </p>
+
+          <!-- Cards grid -->
+          <div class="cards-grid">
+            <div class="tech-card reveal stagger-1">
+              <div class="card-icon">📡</div>
+              <h3>5G Networks</h3>
+              <p>
+                Fifth-generation cellular technology delivers peak speeds up to
+                20 Gbps with sub-1ms latency, enabling autonomous vehicles,
+                remote surgery, and dense IoT deployments.
               </p>
+              <div class="card-tag">
+                Real World: Smart factory automation at BMW Leipzig
+              </div>
+            </div>
+            <div class="tech-card reveal stagger-2">
+              <div class="card-icon">🛰️</div>
+              <h3>Satellite Internet</h3>
+              <p>
+                LEO satellite constellations (Starlink, OneWeb) provide
+                broadband to underserved regions at latencies of 20–40 ms,
+                fundamentally democratizing connectivity.
+              </p>
+              <div class="card-tag">
+                Real World: Ukraine conflict communications (2022–present)
+              </div>
+            </div>
+            <div class="tech-card reveal stagger-3">
+              <div class="card-icon">💬</div>
+              <h3>Unified Communications</h3>
+              <p>
+                UC platforms integrate VoIP, video conferencing, instant
+                messaging, and file sharing into single ecosystems, reducing
+                communication overhead for distributed teams.
+              </p>
+              <div class="card-tag">
+                Real World: Microsoft Teams, Zoom, Cisco Webex
+              </div>
             </div>
           </div>
-          <div class="artist-card">
-            <div class="artist-image">
-              <img
-                src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                alt="Amorsolo"
-              />
-            </div>
-            <div class="artist-info">
-              <h3>Fernando Amorsolo</h3>
-              <p class="specialty">Painter</p>
-              <p class="bio">
-                Famous for his pastoral scenes and mastery of light, capturing
-                idyllic rural Philippines.
+
+          <!-- Accordion -->
+          <div class="accordion reveal">
+            <button class="accordion-btn">
+              <span>Deep Dive: Protocols Powering Modern Communication</span>
+              <span class="acc-icon">+</span>
+            </button>
+            <div class="accordion-body">
+              <p>
+                <strong>WebRTC</strong> enables peer-to-peer audio/video
+                directly in browsers without plugins, using SRTP encryption and
+                ICE/STUN/TURN for NAT traversal.
               </p>
-            </div>
-          </div>
-          <div class="artist-card">
-            <div class="artist-image">
-              <img
-                src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                alt="Amorsolo"
-              />
-            </div>
-            <div class="artist-info">
-              <h3>Fernando Amorsolo</h3>
-              <p class="specialty">Painter</p>
-              <p class="bio">
-                Famous for his pastoral scenes and mastery of light, capturing
-                idyllic rural Philippines.
+              <p>
+                <strong>QUIC / HTTP/3</strong> replaces TCP+TLS with a UDP-based
+                transport that reduces connection establishment to a single
+                round trip, cutting latency by up to 30%.
               </p>
-            </div>
-          </div>
-          <div class="artist-card">
-            <div class="artist-image">
-              <img
-                src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                alt="Amorsolo"
-              />
-            </div>
-            <div class="artist-info">
-              <h3>Fernando Amorsolo</h3>
-              <p class="specialty">Painter</p>
-              <p class="bio">
-                Famous for his pastoral scenes and mastery of light, capturing
-                idyllic rural Philippines.
-              </p>
-            </div>
-          </div>
-          <div class="artist-card">
-            <div class="artist-image">
-              <img
-                src="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                alt="Anita Magsaysay-Ho"
-              />
-            </div>
-            <div class="artist-info">
-              <h3>Anita Magsaysay-Ho</h3>
-              <p class="specialty">Painter</p>
-              <p class="bio">
-                One of the leading female modernist painters, known for her
-                depictions of Filipino women.
+              <p>
+                <strong>SIP (Session Initiation Protocol)</strong> remains the
+                backbone of VoIP systems, defining how multimedia communication
+                sessions are initiated, maintained, and terminated across IP
+                networks.
               </p>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Current Exhibitions Section -->
-    <section id="current-exhibitions" class="section current-exhibitions">
-      <div class="container">
-        <h2 class="section-title">Current Exhibitions</h2>
-        <div class="exhibitions-grid">
-          <div class="exhibition-card">
-            <div class="exhibition-image">
-              <img
-                src="Img/bootstand.jpeg"
-                alt="Visit us on Xaiver Building"
-              />
+      <!-- ══ 02 · NETWORKING ════════════════════════════════════════ -->
+      <section class="section tech-section alt-section" id="networking">
+        <div class="section-header reveal">
+          <span class="section-index">02</span>
+          <h2 class="section-title">Networking Technologies</h2>
+          <p class="section-sub">The infrastructure beneath everything</p>
+        </div>
+
+        <div class="section-body">
+          <p class="lead reveal">
+            Networking has evolved from static topologies into programmable,
+            software-defined fabrics capable of adapting to workload demands in
+            real time.
+          </p>
+
+          <!-- Inline stat bar -->
+          <div class="stat-bar reveal">
+            <div class="stat-item">
+              <span class="stat-num">400 Gbps</span>
+              <span class="stat-desc">Modern backbone link speeds</span>
             </div>
-            <div class="exhibition-info">
-              <h3>Booth Stand</h3>
-              <p class="date">November 24 - 26, 2025.</p>
-              <p class="description">
-                A showcase of contemporary Filipino artists!
-              </p>
-              <button class="btn-outline">Learn More</button>
+            <div class="stat-item">
+              <span class="stat-num">SDN</span>
+              <span class="stat-desc">Software-Defined Networking</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num">MPLS</span>
+              <span class="stat-desc">Multiprotocol Label Switching</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num">BGP</span>
+              <span class="stat-desc">Internet routing protocol</span>
             </div>
           </div>
-          <div class="exhibition-card">
-            <div class="exhibition-image">
-              <img
-                src="Img/roblox.jpeg"
-                alt="JOIN US NOW!"
-              />
-            </div>
-            <div class="exhibition-info">
-              <h3>Roblox</h3>
-              <p class="date">November 24-26, 2025.</p>
-              <p class="description">
-                 Step into our virtual art exhibit and experience creativity brought to life in the world of Roblox.
+
+          <div class="cards-grid">
+            <div class="tech-card reveal stagger-1">
+              <div class="card-icon">🔀</div>
+              <h3>Software-Defined Networking</h3>
+              <p>
+                SDN decouples the control plane from the data plane,
+                centralizing network logic and enabling programmable, dynamic
+                configuration without touching physical hardware.
               </p>
-              <button class="btn-outline">Join us!</button>
+              <div class="card-tag">
+                Real World: Google's B4 WAN, meta backbone networks
+              </div>
+            </div>
+            <div class="tech-card reveal stagger-2">
+              <div class="card-icon">🌐</div>
+              <h3>Edge Networking</h3>
+              <p>
+                Edge nodes process data at the network periphery — closer to
+                devices — minimizing round-trip latency for time-critical
+                applications such as AR/VR and autonomous systems.
+              </p>
+              <div class="card-tag">
+                Real World: AWS Outposts, Cloudflare Workers
+              </div>
+            </div>
+            <div class="tech-card reveal stagger-3">
+              <div class="card-icon">🔒</div>
+              <h3>Zero Trust Architecture</h3>
+              <p>
+                ZTA eliminates implicit network trust. Every user, device, and
+                request must be continuously verified, limiting lateral movement
+                and reducing breach impact.
+              </p>
+              <div class="card-tag">
+                Real World: Google BeyondCorp enterprise deployment
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion reveal">
+            <button class="accordion-btn">
+              <span>Deep Dive: IPv6 Transition & the Address Space Crisis</span>
+              <span class="acc-icon">+</span>
+            </button>
+            <div class="accordion-body">
+              <p>
+                IPv4's 32-bit address space yielded ~4.3 billion addresses —
+                exhausted by IANA in 2011. IPv6 provides 128-bit addressing,
+                allowing 3.4 × 10³⁸ unique addresses — effectively unlimited for
+                any foreseeable future.
+              </p>
+              <p>
+                Transition mechanisms such as dual-stack, tunneling (6in4), and
+                NAT64 enable coexistence during the migration period. As of
+                2024, global IPv6 adoption exceeds 45%, driven by mobile
+                operators in India, the US, and Germany.
+              </p>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-content">
-          <div class="footer-logo">
-            <h2>Baliktanaw</h2>
+      <!-- ══ 03 · CLOUD COMPUTING ═══════════════════════════════════ -->
+      <section class="section tech-section" id="cloud">
+        <div class="section-header reveal">
+          <span class="section-index">03</span>
+          <h2 class="section-title">Cloud Computing</h2>
+          <p class="section-sub">Infinite scale on demand</p>
+        </div>
+
+        <div class="section-body">
+          <p class="lead reveal">
+            Cloud computing has redefined the economics of IT infrastructure.
+            Organizations access virtually unlimited compute, storage, and
+            specialized services at variable cost, eliminating the capital
+            expenditure burden of on-premises hardware.
+          </p>
+
+          <!-- Bento-style service model visual -->
+          <div class="cloud-bento reveal">
+            <div class="cloud-tier tier-saas">
+              <span class="tier-label">SaaS</span>
+              <span class="tier-desc"
+                >Software as a Service — apps delivered over the web (Gmail,
+                Salesforce, Figma)</span
+              >
+            </div>
+            <div class="cloud-tier tier-paas">
+              <span class="tier-label">PaaS</span>
+              <span class="tier-desc"
+                >Platform as a Service — development environments &amp; runtimes
+                (Heroku, Google App Engine)</span
+              >
+            </div>
+            <div class="cloud-tier tier-iaas">
+              <span class="tier-label">IaaS</span>
+              <span class="tier-desc"
+                >Infrastructure as a Service — raw compute/storage/network (AWS
+                EC2, Azure VMs)</span
+              >
+            </div>
+            <div class="cloud-tier tier-faas">
+              <span class="tier-label">FaaS</span>
+              <span class="tier-desc"
+                >Function as a Service — event-driven serverless execution (AWS
+                Lambda, Cloudflare Workers)</span
+              >
+            </div>
+          </div>
+
+          <div class="cards-grid">
+            <div class="tech-card reveal stagger-1">
+              <div class="card-icon">🏗️</div>
+              <h3>Hyperscale Infrastructure</h3>
+              <p>
+                AWS, Azure, and GCP operate hyperscale data centers consuming
+                hundreds of megawatts, hosting millions of servers with N+1
+                redundancy and geographic distribution.
+              </p>
+              <div class="card-tag">
+                Real World: Netflix streams 700TB/s via AWS
+              </div>
+            </div>
+            <div class="tech-card reveal stagger-2">
+              <div class="card-icon">⚡</div>
+              <h3>Serverless Computing</h3>
+              <p>
+                Serverless abstracts infrastructure entirely. Developers deploy
+                functions triggered by events; billing is per-invocation,
+                enabling extreme cost efficiency at low-to-moderate scale.
+              </p>
+              <div class="card-tag">
+                Real World: Coca-Cola vending machine API on AWS Lambda
+              </div>
+            </div>
+            <div class="tech-card reveal stagger-3">
+              <div class="card-icon">🐳</div>
+              <h3>Containerization & Orchestration</h3>
+              <p>
+                Docker containers package applications with dependencies into
+                portable, immutable images. Kubernetes orchestrates thousands of
+                containers across clusters with self-healing and auto-scaling.
+              </p>
+              <div class="card-tag">
+                Real World: Spotify, Airbnb, and Uber run Kubernetes at scale
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion reveal">
+            <button class="accordion-btn">
+              <span>Deep Dive: Multi-Cloud & Vendor Lock-in Strategy</span>
+              <span class="acc-icon">+</span>
+            </button>
+            <div class="accordion-body">
+              <p>
+                Enterprise ICT strategy increasingly favors multi-cloud
+                architectures to avoid dependency on a single provider. Tools
+                like Terraform (infrastructure-as-code) and Kubernetes enable
+                workload portability across AWS, Azure, and GCP.
+              </p>
+              <p>
+                The hidden costs of multi-cloud include data egress fees (up to
+                $0.09/GB), operational complexity, and skills fragmentation. A
+                disciplined FinOps practice — treating cloud spend as a
+                first-class engineering concern — is now standard in mature
+                organizations.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ 04 · ARTIFICIAL INTELLIGENCE ══════════════════════════ -->
+      <section class="section tech-section alt-section" id="ai">
+        <div class="section-header reveal">
+          <span class="section-index">04</span>
+          <h2 class="section-title">Artificial Intelligence</h2>
+          <p class="section-sub">Machines that learn, reason, and create</p>
+        </div>
+
+        <div class="section-body">
+          <p class="lead reveal">
+            AI has crossed from narrow automation into general cognitive
+            assistance. Large language models, computer vision systems, and
+            reinforcement learning agents now outperform humans on a growing
+            number of well-defined tasks — reshaping every sector they touch.
+          </p>
+
+          <div class="timeline reveal">
+            <div class="timeline-item">
+              <div class="tl-dot"></div>
+              <div class="tl-content">
+                <h4>Machine Learning</h4>
+                <p>
+                  Algorithms learn patterns from data without explicit rules.
+                  Supervised, unsupervised, and reinforcement learning are the
+                  three primary paradigms.
+                </p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="tl-dot"></div>
+              <div class="tl-content">
+                <h4>Deep Learning & Neural Networks</h4>
+                <p>
+                  Multi-layer neural architectures — CNNs, RNNs, Transformers —
+                  achieve state-of-the-art in vision, speech, and language
+                  through hierarchical feature extraction.
+                </p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="tl-dot"></div>
+              <div class="tl-content">
+                <h4>Generative AI & Large Language Models</h4>
+                <p>
+                  Transformer-based LLMs (GPT-4, Claude, Gemini) generate
+                  human-quality text, code, images, and audio. They operate via
+                  next-token prediction over trillion-parameter models.
+                </p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="tl-dot"></div>
+              <div class="tl-content">
+                <h4>AI Agents & Agentic Systems</h4>
+                <p>
+                  Beyond single inference, agentic systems plan multi-step
+                  tasks, call external APIs, and maintain memory — enabling
+                  autonomous execution of complex workflows.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="cards-grid">
+            <div class="tech-card reveal stagger-1">
+              <div class="card-icon">🏥</div>
+              <h3>AI in Healthcare</h3>
+              <p>
+                DeepMind's AlphaFold predicted the 3D structure of 200M+
+                proteins, unlocking drug discovery at unprecedented speed. AI
+                diagnostic tools detect diabetic retinopathy with 94% accuracy.
+              </p>
+              <div class="card-tag">
+                Real World: Google Health, PathAI, Tempus
+              </div>
+            </div>
+            <div class="tech-card reveal stagger-2">
+              <div class="card-icon">🚗</div>
+              <h3>Autonomous Systems</h3>
+              <p>
+                Self-driving vehicles combine LiDAR, camera fusion, and
+                real-time inference to perceive and navigate complex
+                environments — processing gigabytes of sensor data per second.
+              </p>
+              <div class="card-tag">
+                Real World: Waymo One commercial robotaxi service, Phoenix AZ
+              </div>
+            </div>
+            <div class="tech-card reveal stagger-3">
+              <div class="card-icon">💻</div>
+              <h3>AI-Assisted Development</h3>
+              <p>
+                Code generation models (GitHub Copilot, Cursor) suggest
+                context-aware completions, refactors, and documentation —
+                studies show 55% faster task completion for developers.
+              </p>
+              <div class="card-tag">
+                Real World: 1.3M+ Copilot enterprise users (2024)
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion reveal">
+            <button class="accordion-btn">
+              <span>Deep Dive: AI Ethics, Bias, and Governance Frameworks</span>
+              <span class="acc-icon">+</span>
+            </button>
+            <div class="accordion-body">
+              <p>
+                AI systems trained on biased data perpetuate and amplify
+                societal inequities. Landmark cases include COMPAS recidivism
+                scoring, Amazon's scrapped hiring algorithm, and facial
+                recognition misidentifications disproportionately affecting
+                darker skin tones.
+              </p>
+              <p>
+                The EU AI Act (2024) classifies AI by risk tier, mandating
+                transparency for high-risk applications. Responsible AI
+                frameworks from NIST, IEEE, and Anthropic's own Constitutional
+                AI approach provide methodological scaffolding for building
+                aligned systems.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ 05 · IoT ════════════════════════════════════════════════ -->
+      <section class="section tech-section" id="iot">
+        <div class="section-header reveal">
+          <span class="section-index">05</span>
+          <h2 class="section-title">Internet of Things</h2>
+          <p class="section-sub">The physical world, made addressable</p>
+        </div>
+
+        <div class="section-body">
+          <p class="lead reveal">
+            IoT extends internet connectivity to physical objects — from
+            industrial sensors to consumer wearables — creating a vast,
+            continuously updating data layer that bridges digital and physical
+            reality.
+          </p>
+
+          <div class="cards-grid">
+            <div class="tech-card reveal stagger-1">
+              <div class="card-icon">🏭</div>
+              <h3>Industrial IoT (IIoT)</h3>
+              <p>
+                Factories deploy thousands of sensors on production lines,
+                feeding real-time telemetry to predictive maintenance algorithms
+                that detect equipment anomalies before failure occurs.
+              </p>
+              <div class="card-tag">
+                Real World: Siemens MindSphere, GE Predix platforms
+              </div>
+            </div>
+            <div class="tech-card reveal stagger-2">
+              <div class="card-icon">🌆</div>
+              <h3>Smart Cities</h3>
+              <p>
+                Urban IoT networks manage traffic signal timing, garbage
+                collection routing, air quality monitoring, and emergency
+                response dispatch using sensor networks and AI analytics.
+              </p>
+              <div class="card-tag">
+                Real World: Singapore Smart Nation, Amsterdam Smart City
+              </div>
+            </div>
+            <div class="tech-card reveal stagger-3">
+              <div class="card-icon">⌚</div>
+              <h3>Wearables & Health IoT</h3>
+              <p>
+                Continuous health monitoring devices track ECG, blood oxygen,
+                glucose, and sleep architecture, feeding data into personalized
+                health models that flag irregularities proactively.
+              </p>
+              <div class="card-tag">
+                Real World: Apple Watch AFib detection (FDA cleared)
+              </div>
+            </div>
+          </div>
+
+          <!-- Protocol comparison table -->
+          <div class="table-wrapper reveal">
+            <table class="tech-table">
+              <thead>
+                <tr>
+                  <th>Protocol</th>
+                  <th>Range</th>
+                  <th>Power</th>
+                  <th>Best For</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Bluetooth LE</td>
+                  <td>~100m</td>
+                  <td>Ultra-low</td>
+                  <td>Wearables, healthcare devices</td>
+                </tr>
+                <tr>
+                  <td>Zigbee</td>
+                  <td>~100m mesh</td>
+                  <td>Very low</td>
+                  <td>Smart home, building automation</td>
+                </tr>
+                <tr>
+                  <td>LoRaWAN</td>
+                  <td>~15 km</td>
+                  <td>Extremely low</td>
+                  <td>Agriculture, city-wide sensors</td>
+                </tr>
+                <tr>
+                  <td>NB-IoT</td>
+                  <td>~10 km</td>
+                  <td>Very low</td>
+                  <td>Utility metering, asset tracking</td>
+                </tr>
+                <tr>
+                  <td>Wi-Fi 6 (802.11ax)</td>
+                  <td>~300m</td>
+                  <td>Medium</td>
+                  <td>High-bandwidth IoT, cameras</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="accordion reveal">
+            <button class="accordion-btn">
+              <span>Deep Dive: IoT Security Vulnerabilities & Mitigations</span>
+              <span class="acc-icon">+</span>
+            </button>
+            <div class="accordion-body">
+              <p>
+                IoT devices are frequently deployed with default credentials,
+                unencrypted communications, and no update mechanism — forming
+                the attack surface for botnets like Mirai, which launched a 1.2
+                Tbps DDoS attack in 2016.
+              </p>
+              <p>
+                Mitigations include hardware security modules (HSMs) for key
+                storage, TLS 1.3 for transport encryption, certificate-based
+                device authentication, and over-the-air (OTA) update
+                infrastructure. NIST IR 8259 provides baseline IoT security
+                requirements for manufacturers.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ 06 · MULTIMEDIA ════════════════════════════════════════ -->
+      <section class="section tech-section alt-section" id="multimedia">
+        <div class="section-header reveal">
+          <span class="section-index">06</span>
+          <h2 class="section-title">Multimedia Technologies</h2>
+          <p class="section-sub">
+            Encoding, transmitting, and experiencing media
+          </p>
+        </div>
+
+        <div class="section-body">
+          <p class="lead reveal">
+            Multimedia technologies encompass the codecs, streaming protocols,
+            rendering engines, and immersive computing platforms that define how
+            humans consume and create digital media.
+          </p>
+
+          <div class="cards-grid">
+            <div class="tech-card reveal stagger-1">
+              <div class="card-icon">🎬</div>
+              <h3>Adaptive Bitrate Streaming</h3>
+              <p>
+                ABR protocols (HLS, DASH) dynamically adjust video quality based
+                on available bandwidth, enabling seamless 4K streaming even on
+                variable connections.
+              </p>
+              <div class="card-tag">
+                Real World: Netflix Adaptive Encoding, YouTube VP9
+              </div>
+            </div>
+            <div class="tech-card reveal stagger-2">
+              <div class="card-icon">🥽</div>
+              <h3>Extended Reality (XR)</h3>
+              <p>
+                VR, AR, and MR converge under Extended Reality. XR systems
+                require 90+ fps rendering with sub-20ms motion-to-photon latency
+                to prevent vestibular discomfort in immersive environments.
+              </p>
+              <div class="card-tag">
+                Real World: Apple Vision Pro, Meta Quest 3
+              </div>
+            </div>
+            <div class="tech-card reveal stagger-3">
+              <div class="card-icon">🎨</div>
+              <h3>AI-Generated Media</h3>
+              <p>
+                Diffusion models, GANs, and multimodal LLMs generate
+                photorealistic images, synthetic video, voice clones, and music
+                — raising profound questions about authenticity and provenance.
+              </p>
+              <div class="card-tag">
+                Real World: Sora (OpenAI), Stable Diffusion, ElevenLabs
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion reveal">
+            <button class="accordion-btn">
+              <span
+                >Deep Dive: Codec Wars — AV1, H.265, and the Future of Video
+                Compression</span
+              >
+              <span class="acc-icon">+</span>
+            </button>
+            <div class="accordion-body">
+              <p>
+                AV1, developed by the Alliance for Open Media (Google, Netflix,
+                Amazon), achieves 30–50% better compression than H.264 at
+                equivalent quality — critical for reducing global internet
+                bandwidth consumption.
+              </p>
+              <p>
+                HEVC/H.265 offers comparable efficiency but has fragmented
+                royalty licensing. AV1's royalty-free model has accelerated
+                adoption: YouTube, Netflix, and Twitch now use AV1 for a
+                significant portion of streams. The emerging VVC (H.266)
+                standard promises another 50% efficiency gain for 8K content.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ 07 · CYBERSECURITY ══════════════════════════════════════ -->
+      <section class="section tech-section" id="cyber">
+        <div class="section-header reveal">
+          <span class="section-index">07</span>
+          <h2 class="section-title">Cybersecurity</h2>
+          <p class="section-sub">Defending the digital frontier</p>
+        </div>
+
+        <div class="section-body">
+          <p class="lead reveal">
+            Cybersecurity has become a matter of national security, economic
+            stability, and individual privacy. The threat landscape evolves
+            faster than defensive postures — demanding continuous adaptation,
+            automation, and cross-organizational collaboration.
+          </p>
+
+          <!-- Alert-style stat block -->
+          <div class="alert-block reveal">
+            <div class="alert-item">
+              <span class="alert-num">$8T</span>
+              <span
+                >Estimated global cybercrime cost in 2023 (Cybersecurity
+                Ventures)</span
+              >
+            </div>
+            <div class="alert-item">
+              <span class="alert-num">277 days</span>
+              <span
+                >Average time to identify and contain a breach (IBM 2023)</span
+              >
+            </div>
+            <div class="alert-item">
+              <span class="alert-num">82%</span>
+              <span>Breaches involving human element (Verizon DBIR 2023)</span>
+            </div>
+          </div>
+
+          <div class="cards-grid">
+            <div class="tech-card reveal stagger-1">
+              <div class="card-icon">🛡️</div>
+              <h3>Threat Intelligence & SIEM</h3>
+              <p>
+                Security Information and Event Management platforms aggregate
+                logs from thousands of sources, applying ML-based correlation to
+                identify anomalous patterns in real time.
+              </p>
+              <div class="card-tag">
+                Real World: Splunk, Microsoft Sentinel, Elastic SIEM
+              </div>
+            </div>
+            <div class="tech-card reveal stagger-2">
+              <div class="card-icon">🔐</div>
+              <h3>Cryptography & PKI</h3>
+              <p>
+                Modern cryptographic infrastructure relies on TLS 1.3,
+                AES-256-GCM for symmetric encryption, and RSA/ECDSA for key
+                exchange. Post-quantum cryptography (CRYSTALS-Kyber) is being
+                standardized by NIST.
+              </p>
+              <div class="card-tag">
+                Real World: Let's Encrypt — 300M+ TLS certificates issued
+              </div>
+            </div>
+            <div class="tech-card reveal stagger-3">
+              <div class="card-icon">🎯</div>
+              <h3>Penetration Testing & Red Teams</h3>
+              <p>
+                Ethical hackers simulate adversarial attacks using frameworks
+                like MITRE ATT&CK to identify vulnerabilities before malicious
+                actors do, providing actionable remediation intelligence.
+              </p>
+              <div class="card-tag">
+                Real World: US DoD Bug Bounty, HackerOne platform
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion reveal">
+            <button class="accordion-btn">
+              <span
+                >Deep Dive: Ransomware-as-a-Service & Nation-State Threat
+                Actors</span
+              >
+              <span class="acc-icon">+</span>
+            </button>
+            <div class="accordion-body">
+              <p>
+                RaaS models have lowered the barrier to launching ransomware
+                campaigns to near zero. Groups like LockBit and ALPHV/BlackCat
+                operate affiliate programs, splitting ransom proceeds with
+                operators who handle victim targeting and initial access.
+              </p>
+              <p>
+                Nation-state actors (APT28 / Fancy Bear, Lazarus Group, Volt
+                Typhoon) conduct cyber espionage and pre-positioning operations
+                against critical infrastructure — power grids, water systems,
+                and financial networks — as geopolitical leverage instruments.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ 08 · BIG DATA ══════════════════════════════════════════ -->
+      <section class="section tech-section alt-section" id="bigdata">
+        <div class="section-header reveal">
+          <span class="section-index">08</span>
+          <h2 class="section-title">Big Data & Data Management</h2>
+          <p class="section-sub">Turning volume into value</p>
+        </div>
+
+        <div class="section-body">
+          <p class="lead reveal">
+            Big Data refers not simply to volume, but to the unique challenges
+            of variety, velocity, and veracity that traditional database systems
+            cannot address. Modern data architectures extract strategic
+            intelligence from petabyte-scale, heterogeneous, continuously
+            generated datasets.
+          </p>
+
+          <!-- 5 Vs visual -->
+          <div class="vs-grid reveal">
+            <div class="vs-item">
+              <span class="vs-letter">V</span>
+              <span class="vs-word">Volume</span>
+              <span class="vs-desc"
+                >Petabytes to exabytes of data generated continuously</span
+              >
+            </div>
+            <div class="vs-item">
+              <span class="vs-letter">V</span>
+              <span class="vs-word">Velocity</span>
+              <span class="vs-desc"
+                >Real-time and near-real-time data streams</span
+              >
+            </div>
+            <div class="vs-item">
+              <span class="vs-letter">V</span>
+              <span class="vs-word">Variety</span>
+              <span class="vs-desc"
+                >Structured, semi-structured, unstructured data</span
+              >
+            </div>
+            <div class="vs-item">
+              <span class="vs-letter">V</span>
+              <span class="vs-word">Veracity</span>
+              <span class="vs-desc"
+                >Data quality, completeness, and trustworthiness</span
+              >
+            </div>
+            <div class="vs-item">
+              <span class="vs-letter">V</span>
+              <span class="vs-word">Value</span>
+              <span class="vs-desc"
+                >Actionable insights extracted from the above four</span
+              >
+            </div>
+          </div>
+
+          <div class="cards-grid">
+            <div class="tech-card reveal stagger-1">
+              <div class="card-icon">🗄️</div>
+              <h3>Data Lakehouses</h3>
+              <p>
+                Lakehouses combine the raw storage flexibility of data lakes
+                with the ACID transaction guarantees and query performance of
+                data warehouses — unifying batch and streaming analytics on a
+                single platform.
+              </p>
+              <div class="card-tag">
+                Real World: Databricks Delta Lake, Apache Iceberg
+              </div>
+            </div>
+            <div class="tech-card reveal stagger-2">
+              <div class="card-icon">⚙️</div>
+              <h3>Stream Processing</h3>
+              <p>
+                Engines like Apache Kafka and Apache Flink process millions of
+                events per second with millisecond latency, enabling real-time
+                fraud detection, recommendation systems, and operational
+                dashboards.
+              </p>
+              <div class="card-tag">
+                Real World: LinkedIn Kafka — 7T events/day processed
+              </div>
+            </div>
+            <div class="tech-card reveal stagger-3">
+              <div class="card-icon">📊</div>
+              <h3>Data Governance & Compliance</h3>
+              <p>
+                Enterprise data governance frameworks define ownership, lineage,
+                quality standards, and access controls — increasingly mandated
+                by GDPR, CCPA, and sector-specific regulations.
+              </p>
+              <div class="card-tag">
+                Real World: Collibra, Apache Atlas, Microsoft Purview
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion reveal">
+            <button class="accordion-btn">
+              <span
+                >Deep Dive: The Modern Data Stack & Analytics Engineering</span
+              >
+              <span class="acc-icon">+</span>
+            </button>
+            <div class="accordion-body">
+              <p>
+                The modern data stack emerged from cloud-native tooling:
+                Fivetran/Airbyte for ingestion, Snowflake/BigQuery/Redshift for
+                storage and compute, dbt for transformation, and Looker/Metabase
+                for BI visualization. This stack enables small teams to build
+                production-grade analytics pipelines.
+              </p>
+              <p>
+                Analytics engineering — the discipline of modeling, testing, and
+                documenting data transformations — has emerged as a dedicated
+                role. dbt (data build tool) applies software engineering
+                practices (version control, testing, documentation) to SQL-based
+                data pipelines, dramatically improving data reliability and
+                maintainability.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ FOOTER ══════════════════════════════════════════════════ -->
+      <footer class="site-footer reveal">
+        <div class="footer-inner">
+          <div class="footer-left">
+            <span class="footer-logo">ICT</span>
             <p>
-              Preserving and promoting Philippine cultural heritage through the
-              arts.
+              An educational reference on modern Information and Communication
+              Technologies.
             </p>
           </div>
-          <div class="footer-links">
-            <h3>Quick Links</h3>
-            <ul>
-              <li><a href="#home">Home</a></li>
-              <li><a href="#art-categories">Art Categories</a></li>
-              <li><a href="#featured-artworks">Featured Artworks</a></li>
-              <li><a href="#current-exhibitions">Current Exhibitions</a></li>
-            </ul>
-          </div>
-          <div class="footer-newsletter">
-            <h3>Stay Updated</h3>
-            <p>
-              Subscribe to our newsletter for exhibition updates and events.
+          <div class="footer-right">
+            <p class="footer-note">
+              Designed for academic and professional use.
             </p>
-            <form class="newsletter-form">
-              <input type="email" placeholder="Your Email" />
-              <button type="submit">Subscribe</button>
-            </form>
+            <p class="footer-note">
+              Content reflects current technology landscape as of 2025.
+            </p>
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 By ZT13 . All rights reserved.</p>
+          <span>© 2025 ICT in the Modern Era · Educational Reference</span>
+          <button class="back-to-top" id="backToTop">↑ Back to top</button>
         </div>
-      </div>
-    </footer>
+      </footer>
+    </main>
+    <!-- /main -->
+
+    <!-- ─── PROGRESS BAR ────────────────────────────────────────── -->
+    <div class="progress-bar" id="progressBar"></div>
 
     <script src="script.js"></script>
   </body>
