@@ -1,12 +1,244 @@
-/* ================================================================
-   ICT IN THE MODERN ERA — script.js
-   Interactivity: Custom cursor · Scroll reveal · Sidebar nav ·
-                  Accordion · Progress bar · Active nav tracking
-   ================================================================ */
-
 "use strict";
 
-// ── DOM ELEMENTS ─────────────────────────────────────────────────
+// NEW QUIZ DATA - completely different questions about ICT
+const quizData = [
+  {
+    question: "Which technology enables autonomous vehicles to communicate with nearby infrastructure in real-time?",
+    options: ["LiDAR", "V2X (Vehicle-to-Everything)", "GPS", "HD Maps"],
+    correct: 1,
+    explanation: "V2X communication allows vehicles to exchange data with traffic lights, road signs, and other vehicles for safer autonomous navigation."
+  },
+  {
+    question: "What is the primary advantage of edge computing compared to cloud computing?",
+    options: ["Higher storage capacity", "Lower latency", "Cheaper hardware", "Easier backup"],
+    correct: 1,
+    explanation: "Edge computing processes data closer to the source, significantly reducing latency for time-sensitive applications."
+  },
+  {
+    question: "Which protocol is specifically designed for low-power wide-area IoT networks?",
+    options: ["Wi-Fi 6", "Bluetooth 5.0", "LoRaWAN", "Z-Wave"],
+    correct: 2,
+    explanation: "LoRaWAN is optimized for long-range, low-power communication ideal for IoT sensors in agriculture and smart cities."
+  },
+  {
+    question: "What does 'homomorphic encryption' allow computation on?",
+    options: ["Decrypted data only", "Encrypted data without decryption", "Compressed data", "Anonymized data"],
+    correct: 1,
+    explanation: "Homomorphic encryption enables computations on encrypted data, preserving privacy while allowing analysis."
+  },
+  {
+    question: "Which company developed the Transformer neural network architecture?",
+    options: ["OpenAI", "DeepMind", "Google Brain", "Meta AI"],
+    correct: 2,
+    explanation: "Google Brain introduced the Transformer architecture in 2017's 'Attention Is All You Need' paper."
+  },
+  {
+    question: "What is the maximum theoretical speed of Wi-Fi 7 (802.11be)?",
+    options: ["9.6 Gbps", "20 Gbps", "40 Gbps", "46 Gbps"],
+    correct: 3,
+    explanation: "Wi-Fi 7 can theoretically achieve up to 46 Gbps using 320 MHz channels and 4096-QAM modulation."
+  },
+  {
+    question: "Which consensus mechanism is used by Ethereum after The Merge?",
+    options: ["Proof of Work (PoW)", "Proof of Stake (PoS)", "Delegated Proof of Stake (DPoS)", "Proof of Authority (PoA)"],
+    correct: 1,
+    explanation: "Ethereum transitioned from Proof of Work to Proof of Stake in September 2022, reducing energy consumption by 99.9%."
+  },
+  {
+    question: "What does 'quantum supremacy' refer to?",
+    options: ["Faster quantum internet", "Quantum computer solving a problem classical computers cannot", "Unbreakable quantum encryption", "Quantum cloud computing"],
+    correct: 1,
+    explanation: "Quantum supremacy is achieved when a quantum computer performs a calculation that is infeasible for classical supercomputers."
+  },
+  {
+    question: "Which programming language is most commonly used for statistical computing and data analysis?",
+    options: ["Java", "C++", "Python", "R"],
+    correct: 3,
+    explanation: "R is specifically designed for statistical analysis, while Python is also popular for data science."
+  },
+  {
+    question: "What is 'model drift' in machine learning?",
+    options: ["Faster training time", "Decreased model accuracy over time due to changing data patterns", "Model size reduction", "Increased prediction speed"],
+    correct: 1,
+    explanation: "Model drift occurs when real-world data patterns change, causing a deployed ML model's performance to degrade over time."
+  }
+];
+
+// DOM Elements
+const quizContainer = document.getElementById("quizContainer");
+const quizCounter = document.getElementById("quizCounter");
+const quizScore = document.getElementById("quizScore");
+const quizQuestion = document.getElementById("quizQuestion");
+const quizOptions = document.getElementById("quizOptions");
+const quizFeedback = document.getElementById("quizFeedback");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const quizResults = document.getElementById("quizResults");
+const restartBtn = document.getElementById("restartBtn");
+
+// Quiz State
+let currentQuestion = 0;
+let userAnswers = new Array(quizData.length).fill(null);
+let score = 0;
+let quizActive = true;
+
+// Initialize Quiz
+function initQuiz() {
+  currentQuestion = 0;
+  userAnswers.fill(null);
+  score = 0;
+  quizActive = true;
+  updateScoreDisplay();
+  showQuestion();
+  updateNavButtons();
+  quizResults.style.display = "none";
+  document.querySelector(".quiz-card").style.display = "block";
+  quizFeedback.innerHTML = "";
+  quizFeedback.className = "quiz-feedback";
+}
+
+function showQuestion() {
+  const q = quizData[currentQuestion];
+  quizQuestion.textContent = q.question;
+  quizCounter.textContent = `Question ${currentQuestion + 1} / ${quizData.length}`;
+  
+  const selectedAnswer = userAnswers[currentQuestion];
+  quizOptions.innerHTML = "";
+  
+  q.options.forEach((option, idx) => {
+    const btn = document.createElement("button");
+    btn.className = "quiz-option";
+    if (selectedAnswer !== null) {
+      if (idx === q.correct) btn.classList.add("correct");
+      if (idx === selectedAnswer && idx !== q.correct) btn.classList.add("wrong");
+      if (idx === selectedAnswer) btn.classList.add("selected");
+    }
+    btn.textContent = option;
+    btn.onclick = () => selectAnswer(idx);
+    quizOptions.appendChild(btn);
+  });
+  
+  if (selectedAnswer !== null) {
+    const isCorrect = selectedAnswer === q.correct;
+    showFeedback(isCorrect);
+  } else {
+    quizFeedback.innerHTML = "";
+    quizFeedback.className = "quiz-feedback";
+  }
+}
+
+function selectAnswer(selectedIdx) {
+  if (!quizActive) return;
+  if (userAnswers[currentQuestion] !== null) return;
+  
+  const q = quizData[currentQuestion];
+  const isCorrect = selectedIdx === q.correct;
+  
+  userAnswers[currentQuestion] = selectedIdx;
+  if (isCorrect) score++;
+  updateScoreDisplay();
+  
+  showQuestion();
+  
+  setTimeout(() => {
+    if (currentQuestion < quizData.length - 1) {
+      currentQuestion++;
+      showQuestion();
+      updateNavButtons();
+    } else {
+      finishQuiz();
+    }
+  }, 800);
+}
+
+function showFeedback(isCorrect) {
+  const q = quizData[currentQuestion];
+  if (isCorrect) {
+    quizFeedback.innerHTML = `✓ Correct! ${q.explanation}`;
+    quizFeedback.className = "quiz-feedback correct-feedback";
+  } else {
+    const correctAnswer = q.options[q.correct];
+    quizFeedback.innerHTML = `✗ Incorrect. The correct answer is "${correctAnswer}". ${q.explanation}`;
+    quizFeedback.className = "quiz-feedback wrong-feedback";
+  }
+}
+
+function updateScoreDisplay() {
+  quizScore.textContent = `Score: ${score}`;
+}
+
+function updateNavButtons() {
+  prevBtn.disabled = currentQuestion === 0;
+  if (currentQuestion === quizData.length - 1) {
+    nextBtn.textContent = "Finish →";
+  } else {
+    nextBtn.textContent = "Next →";
+  }
+}
+
+function nextQuestion() {
+  if (!quizActive) return;
+  if (userAnswers[currentQuestion] === null) {
+    quizFeedback.innerHTML = "⚠ Please select an answer before proceeding.";
+    quizFeedback.className = "quiz-feedback wrong-feedback";
+    return;
+  }
+  if (currentQuestion < quizData.length - 1) {
+    currentQuestion++;
+    showQuestion();
+    updateNavButtons();
+  } else {
+    finishQuiz();
+  }
+}
+
+function prevQuestion() {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    showQuestion();
+    updateNavButtons();
+  }
+}
+
+function finishQuiz() {
+  quizActive = false;
+  const percentage = (score / quizData.length) * 100;
+  const resultsCard = document.querySelector(".quiz-card");
+  resultsCard.style.display = "none";
+  
+  let message = "";
+  let icon = "";
+  if (percentage === 100) {
+    message = "Perfect score! You're an ICT expert! 🎓";
+    icon = "🏆";
+  } else if (percentage >= 80) {
+    message = "Excellent! Great understanding of modern ICT technologies! 🌟";
+    icon = "🎉";
+  } else if (percentage >= 60) {
+    message = "Good job! Review the sections above to master all topics! 📚";
+    icon = "👍";
+  } else {
+    message = "Keep learning! Explore the technology sections and try the quiz again! 💪";
+    icon = "📖";
+  }
+  
+  document.getElementById("resultsIcon").textContent = icon;
+  document.getElementById("resultsTitle").textContent = "Quiz Complete!";
+  document.getElementById("resultsScore").textContent = `Your Score: ${score}/${quizData.length}`;
+  document.getElementById("resultsMessage").textContent = message;
+  quizResults.style.display = "block";
+}
+
+function restartQuiz() {
+  initQuiz();
+}
+
+// Event Listeners
+nextBtn.addEventListener("click", nextQuestion);
+prevBtn.addEventListener("click", prevQuestion);
+restartBtn.addEventListener("click", restartQuiz);
+
+// Custom cursor, progress bar, sidebar, scroll reveal, accordion, etc.
 const cursor = document.getElementById("cursor");
 const cursorFollower = document.getElementById("cursor-follower");
 const progressBar = document.getElementById("progressBar");
@@ -18,301 +250,116 @@ const sections = document.querySelectorAll("section[id]");
 const revealEls = document.querySelectorAll(".reveal");
 const accordionBtns = document.querySelectorAll(".accordion-btn");
 
-/* ════════════════════════════════════════════════════════════════
-   1. CUSTOM CURSOR
-   Smooth-following dual-layer cursor using requestAnimationFrame
-   ════════════════════════════════════════════════════════════════ */
-let mouseX = 0,
-  mouseY = 0;
-let followerX = 0,
-  followerY = 0;
-
-// Track raw mouse position
-document.addEventListener("mousemove", (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-
-  // Snap the small dot immediately
-  if (cursor) {
-    cursor.style.left = mouseX + "px";
-    cursor.style.top = mouseY + "px";
+function initCursor() {
+  if (window.matchMedia("(pointer: fine)").matches && window.innerWidth > 900) {
+    let mouseX = 0, mouseY = 0, followerX = 0, followerY = 0;
+    document.addEventListener("mousemove", (e) => {
+      mouseX = e.clientX; mouseY = e.clientY;
+      if (cursor) cursor.style.cssText = `left: ${mouseX}px; top: ${mouseY}px;`;
+    });
+    function animateFollower() {
+      followerX += (mouseX - followerX) * 0.12;
+      followerY += (mouseY - followerY) * 0.12;
+      if (cursorFollower) cursorFollower.style.cssText = `left: ${followerX}px; top: ${followerY}px;`;
+      requestAnimationFrame(animateFollower);
+    }
+    animateFollower();
+    const hoverTargets = document.querySelectorAll("a, button, .tech-card, .bento-card, .cloud-tier, .accordion-btn, .quiz-option, .quiz-btn");
+    hoverTargets.forEach(el => {
+      el.addEventListener("mouseenter", () => { cursor?.classList.add("hover"); cursorFollower?.classList.add("hover"); });
+      el.addEventListener("mouseleave", () => { cursor?.classList.remove("hover"); cursorFollower?.classList.remove("hover"); });
+    });
+  } else {
+    if (cursor) cursor.style.display = "none";
+    if (cursorFollower) cursorFollower.style.display = "none";
   }
-});
-
-// Animate follower with lerp (linear interpolation)
-function animateCursorFollower() {
-  const LERP = 0.12; // lower = slower/smoother
-  followerX += (mouseX - followerX) * LERP;
-  followerY += (mouseY - followerY) * LERP;
-
-  if (cursorFollower) {
-    cursorFollower.style.left = followerX + "px";
-    cursorFollower.style.top = followerY + "px";
-  }
-
-  requestAnimationFrame(animateCursorFollower);
 }
-animateCursorFollower();
 
-// Hover scale-up effect for interactive elements
-const hoverTargets = document.querySelectorAll(
-  "a, button, .tech-card, .bento-card, .cloud-tier, .accordion-btn",
-);
-
-hoverTargets.forEach((el) => {
-  el.addEventListener("mouseenter", () => {
-    cursor?.classList.add("hover");
-    cursorFollower?.classList.add("hover");
-  });
-  el.addEventListener("mouseleave", () => {
-    cursor?.classList.remove("hover");
-    cursorFollower?.classList.remove("hover");
-  });
-});
-
-/* ════════════════════════════════════════════════════════════════
-   2. SCROLL PROGRESS BAR
-   Updates a top-edge progress bar as user scrolls the page
-   ════════════════════════════════════════════════════════════════ */
 function updateProgressBar() {
   const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-  const scrolled = window.scrollY;
-  const progress = docHeight > 0 ? (scrolled / docHeight) * 100 : 0;
-
+  const progress = (window.scrollY / docHeight) * 100;
   if (progressBar) progressBar.style.width = progress + "%";
 }
+window.addEventListener("scroll", updateProgressBar);
 
-window.addEventListener("scroll", updateProgressBar, { passive: true });
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add("visible"); revealObserver.unobserve(entry.target); } });
+}, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+revealEls.forEach(el => revealObserver.observe(el));
 
-/* ════════════════════════════════════════════════════════════════
-   3. SCROLL REVEAL (IntersectionObserver)
-   Fades + slides in elements as they enter the viewport.
-   Uses stagger classes (stagger-1/2/3) defined in CSS.
-   ════════════════════════════════════════════════════════════════ */
-const revealObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-        // Once revealed, unobserve for performance
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  },
-  {
-    threshold: 0.12, // trigger when 12% of element is visible
-    rootMargin: "0px 0px -40px 0px", // slight offset from bottom
-  },
-);
-
-revealEls.forEach((el) => revealObserver.observe(el));
-
-/* ════════════════════════════════════════════════════════════════
-   4. ACTIVE SECTION TRACKING (Sidebar Nav Highlight)
-   Uses IntersectionObserver to determine which section is
-   currently in view and updates the corresponding nav link.
-   ════════════════════════════════════════════════════════════════ */
-const sectionObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const id = entry.target.getAttribute("id");
-
-        navLinks.forEach((link) => {
-          link.classList.remove("active");
-          if (link.getAttribute("href") === `#${id}`) {
-            link.classList.add("active");
-          }
-        });
-      }
-    });
-  },
-  {
-    threshold: 0.35, // highlight when 35% of section is visible
-  },
-);
-
-sections.forEach((section) => sectionObserver.observe(section));
-
-/* ════════════════════════════════════════════════════════════════
-   5. ACCORDION EXPAND / COLLAPSE
-   Toggles the 'open' class on the parent .accordion element.
-   CSS handles the max-height animation for smooth transition.
-   ════════════════════════════════════════════════════════════════ */
-accordionBtns.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const accordion = btn.closest(".accordion");
-
-    // If already open, close it; otherwise open it
-    if (accordion.classList.contains("open")) {
-      accordion.classList.remove("open");
-    } else {
-      // Optionally close all other accordions (comment out for multi-open)
-      document.querySelectorAll(".accordion.open").forEach((openAcc) => {
-        openAcc.classList.remove("open");
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.getAttribute("id");
+      navLinks.forEach(link => {
+        link.classList.remove("active");
+        if (link.getAttribute("href") === `#${id}`) link.classList.add("active");
       });
-      accordion.classList.add("open");
     }
   });
-});
+}, { threshold: 0.35 });
+sections.forEach(section => sectionObserver.observe(section));
 
-/* ════════════════════════════════════════════════════════════════
-   6. SIDEBAR (HAMBURGER MENU for mobile)
-   Toggles sidebar visibility on small screens.
-   Clicking outside the sidebar also closes it.
-   ════════════════════════════════════════════════════════════════ */
-hamburger?.addEventListener("click", () => {
-  sidebar.classList.toggle("open");
-  hamburger.classList.toggle("open");
-});
-
-// Close sidebar when a nav link is clicked (mobile UX)
-navLinks.forEach((link) => {
-  link.addEventListener("click", () => {
-    sidebar.classList.remove("open");
-    hamburger?.classList.remove("open");
+accordionBtns.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const accordion = btn.closest(".accordion");
+    if (accordion.classList.contains("open")) accordion.classList.remove("open");
+    else { document.querySelectorAll(".accordion.open").forEach(open => open.classList.remove("open")); accordion.classList.add("open"); }
   });
 });
 
-// Close sidebar on outside click (mobile)
+hamburger?.addEventListener("click", () => { sidebar?.classList.toggle("open"); hamburger.classList.toggle("open"); });
+navLinks.forEach(link => {
+  link.addEventListener("click", () => { sidebar?.classList.remove("open"); hamburger?.classList.remove("open"); });
+});
 document.addEventListener("click", (e) => {
-  if (
-    sidebar.classList.contains("open") &&
-    !sidebar.contains(e.target) &&
-    !hamburger?.contains(e.target)
-  ) {
-    sidebar.classList.remove("open");
-    hamburger?.classList.remove("open");
+  if (sidebar?.classList.contains("open") && !sidebar.contains(e.target) && !hamburger?.contains(e.target)) {
+    sidebar.classList.remove("open"); hamburger?.classList.remove("open");
   }
 });
 
-/* ════════════════════════════════════════════════════════════════
-   7. BACK TO TOP BUTTON
-   Smooth-scrolls back to the top of the page
-   ════════════════════════════════════════════════════════════════ */
-backToTop?.addEventListener("click", () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
+backToTop?.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 
-/* ════════════════════════════════════════════════════════════════
-   8. HERO TITLE STAGGER ANIMATION (CSS + JS trigger)
-   Adds a class that triggers staggered slide-up on title lines.
-   Each .title-line gets a delay based on its index.
-   ════════════════════════════════════════════════════════════════ */
-const titleLines = document.querySelectorAll(".title-line");
-
-titleLines.forEach((line, i) => {
-  // Wrap inner text for clip-path animation
-  const text = line.textContent;
-  line.innerHTML = `<span class="line-inner" style="
-    display: inline-block;
-    opacity: 0;
-    transform: translateY(60px);
-    transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1) ${0.2 + i * 0.15}s,
-                transform 0.9s cubic-bezier(0.16,1,0.3,1) ${0.2 + i * 0.15}s;
-  ">${text}</span>`;
-});
-
-// Trigger title animation after a tiny delay (ensures CSS parsed)
-setTimeout(() => {
-  document.querySelectorAll(".line-inner").forEach((el) => {
-    el.style.opacity = "1";
-    el.style.transform = "translateY(0)";
-  });
-}, 100);
-
-/* ════════════════════════════════════════════════════════════════
-   9. SMOOTH SCROLL for nav links
-   Enhances native smooth-scroll with offset for better UX
-   ════════════════════════════════════════════════════════════════ */
-navLinks.forEach((link) => {
+navLinks.forEach(link => {
   link.addEventListener("click", (e) => {
-    e.preventDefault();
-    const targetId = link.getAttribute("href").slice(1);
-    const targetEl = document.getElementById(targetId);
-
-    if (targetEl) {
-      const offset = 0; // adjust if you add a sticky top bar
-      const top =
-        targetEl.getBoundingClientRect().top + window.scrollY + offset;
-      window.scrollTo({ top, behavior: "smooth" });
+    if (link.getAttribute("href")?.startsWith("#")) {
+      e.preventDefault();
+      const targetId = link.getAttribute("href").slice(1);
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) targetEl.scrollIntoView({ behavior: "smooth" });
     }
   });
 });
 
-/* ════════════════════════════════════════════════════════════════
-   10. BENTO CARD — TILT MICRO-INTERACTION (desktop only)
-   Subtle 3D tilt on hover using mouse position delta within card
-   ════════════════════════════════════════════════════════════════ */
-if (window.matchMedia("(min-width: 900px)").matches) {
-  const tiltCards = document.querySelectorAll(".tech-card, .bento-card");
+const titleLines = document.querySelectorAll(".title-line");
+titleLines.forEach((line, i) => {
+  const text = line.textContent;
+  line.innerHTML = `<span class="line-inner" style="display:inline-block; opacity:0; transform:translateY(60px); transition:opacity 0.9s cubic-bezier(0.16,1,0.3,1) ${0.2 + i * 0.15}s, transform 0.9s cubic-bezier(0.16,1,0.3,1) ${0.2 + i * 0.15}s;">${text}</span>`;
+});
+setTimeout(() => { document.querySelectorAll(".line-inner").forEach(el => { el.style.opacity = "1"; el.style.transform = "translateY(0)"; }); }, 100);
 
-  tiltCards.forEach((card) => {
+if (window.matchMedia("(min-width: 900px) and (pointer: fine)").matches) {
+  const tiltCards = document.querySelectorAll(".tech-card, .bento-card");
+  tiltCards.forEach(card => {
     card.addEventListener("mousemove", (e) => {
       const rect = card.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const dx = (e.clientX - cx) / (rect.width / 2); // –1 to 1
-      const dy = (e.clientY - cy) / (rect.height / 2); // –1 to 1
-      const tiltX = dy * -5; // max ±5deg
-      const tiltY = dx * 5;
-
-      card.style.transform = `translateY(-6px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
-      card.style.transition = "transform 0.1s linear";
+      const dx = (e.clientX - (rect.left + rect.width/2)) / (rect.width/2);
+      const dy = (e.clientY - (rect.top + rect.height/2)) / (rect.height/2);
+      card.style.transform = `translateY(-4px) rotateX(${dy * -4}deg) rotateY(${dx * 4}deg)`;
     });
-
-    card.addEventListener("mouseleave", () => {
-      card.style.transform = "";
-      card.style.transition = "";
-    });
+    card.addEventListener("mouseleave", () => { card.style.transform = ""; });
   });
 }
 
-/* ════════════════════════════════════════════════════════════════
-   11. TABLE ROW — HIGHLIGHT ANIMATION
-   Highlights table rows with a brief pulse when hovered
-   ════════════════════════════════════════════════════════════════ */
-document.querySelectorAll(".tech-table tbody tr").forEach((row) => {
-  row.addEventListener("mouseenter", () => {
-    row.style.transition = "background 0.2s";
-  });
+window.addEventListener("resize", () => {
+  if (window.innerWidth <= 900) {
+    if (cursor) cursor.style.display = "none";
+    if (cursorFollower) cursorFollower.style.display = "none";
+  } else if (window.matchMedia("(pointer: fine)").matches) {
+    if (cursor) cursor.style.display = "block";
+    if (cursorFollower) cursorFollower.style.display = "block";
+  }
 });
 
-/* ════════════════════════════════════════════════════════════════
-   12. PAGE LOAD — SKELETON → CONTENT TRANSITION
-   Briefly shows skeleton state before content appears
-   ════════════════════════════════════════════════════════════════ */
-(function pageLoad() {
-  // The page starts hidden via the reveal system above.
-  // All .reveal elements begin at opacity:0, and the IntersectionObserver
-  // fires .visible on them as the user scrolls — creating the progressive
-  // reveal effect that mimics a skeleton loading pattern.
-  //
-  // The hero section is immediately visible on load because
-  // the title lines are triggered by the setTimeout above (item 8),
-  // and the hero .reveal elements enter the viewport on load.
-})();
-
-/* ════════════════════════════════════════════════════════════════
-   UTILITY: debounce
-   Prevents excessive function calls on resize/scroll
-   ════════════════════════════════════════════════════════════════ */
-function debounce(fn, delay = 100) {
-  let timer;
-  return (...args) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => fn(...args), delay);
-  };
-}
-
-// Recalculate on resize (for responsive breakpoint changes)
-window.addEventListener(
-  "resize",
-  debounce(() => {
-    // Re-check mobile cursor state
-    const isMobile = window.innerWidth < 900;
-    if (cursor) cursor.style.display = isMobile ? "none" : "block";
-    if (cursorFollower)
-      cursorFollower.style.display = isMobile ? "none" : "block";
-  }, 200),
-);
+initCursor();
+initQuiz();
